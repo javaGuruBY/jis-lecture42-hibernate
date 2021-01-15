@@ -9,7 +9,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,4 +24,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Mentor extends Human {
     Double salary;
+
+    @OneToMany
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    List<Student> studentList = new ArrayList<>();
 }

@@ -27,6 +27,7 @@ public class HibernateUtil {
 
                 settings.put(Environment.USE_SECOND_LEVEL_CACHE, true);
                 settings.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+                settings.put(Environment.USE_QUERY_CACHE, true);
 
                 Configuration configuration = new Configuration();
                 configuration.setProperties(settings);

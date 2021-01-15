@@ -6,8 +6,14 @@ import by.jrr.bean.Mentor;
 import by.jrr.bean.Student;
 import by.jrr.dao.HibernateUtil;
 import net.sf.ehcache.CacheManager;
+import org.hibernate.Cache;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.hibernate.stat.SessionStatistics;
+import org.hibernate.stat.Statistics;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HumanService {
@@ -19,7 +25,16 @@ public class HumanService {
         session.save(new Human(null, "Max"));
         session.save(new Student("http://stud.github.com"));
         session.save(new Alumnus(true));
-        session.save(new Mentor(32.00));
+
+        Student student1 = new Student();
+        Student student2 = new Student();
+        session.save(student1);
+        session.save(student2);
+        List<Student> students = new ArrayList<>();
+        students.add(student1);
+        students.add(student2);
+
+        session.save(new Mentor(32.00, students));
 
         Human human = new Human();
         human.setName("Mikas");
@@ -75,6 +90,8 @@ public class HumanService {
 
     public List<Mentor> getCachedMentors() {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Mentor");
+        query.setCacheable(true);
         List<Mentor> humans = session.createQuery("from Mentor").getResultList();
         humans.forEach(System.out::println);
 
@@ -88,6 +105,26 @@ public class HumanService {
             ex.printStackTrace();
         }
 
+        Statistics factoryStatistics = HibernateUtil.getSessionFactory().getStatistics();
+        SessionStatistics sessionStatistics = session.getStatistics();
+        Cache cache = HibernateUtil.getSessionFactory().getCache();
+
+        session.close();
         return humans;
+    }
+
+    public Mentor findOneCahedMentor() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Mentor where id = 55");
+        Object mentor = query.getSingleResult();
+
+        try {
+            String[] cacheNames = CacheManager.ALL_CACHE_MANAGERS.get(0).getCacheNames();
+            System.out.println("[CACHE SIZE ] "+ cacheNames);
+            System.out.println();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return (Mentor) mentor;
     }
 }

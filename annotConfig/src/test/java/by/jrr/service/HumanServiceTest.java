@@ -54,4 +54,9 @@ class HumanServiceTest {
         System.out.println(humanList);
     }
 
+    @Test
+    void findOneCahedMentor() {
+        Mentor mentor = humanService.findOneCahedMentor();
+        System.out.println(mentor);
+    }
 }
