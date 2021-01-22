@@ -1,9 +1,6 @@
 package by.jrr.service;
 
-import by.jrr.bean.Alumnus;
-import by.jrr.bean.Human;
-import by.jrr.bean.Mentor;
-import by.jrr.bean.Student;
+import by.jrr.bean.*;
 import by.jrr.dao.HibernateUtil;
 import net.sf.ehcache.CacheManager;
 import org.hibernate.Cache;
@@ -23,8 +20,17 @@ public class HumanService {
         session.beginTransaction();
 
         session.save(new Human(null, "Max"));
-        session.save(new Student("http://stud.github.com"));
-        session.save(new Alumnus(true));
+//        session.save(new Student("http://stud.github.com"));
+        AlumnusPIIData transientPii = new AlumnusPIIData();
+        session.save(new Alumnus(true, transientPii));
+        session.save(transientPii);
+
+        Student piiStudent = new Student("http://stud.github.com", null);
+        StudentPIIData piiData = new StudentPIIData();
+        piiData.setStudent(piiStudent);
+        session.save(piiData);
+        session.save(piiStudent);
+
 
         Student student1 = new Student();
         Student student2 = new Student();
@@ -34,7 +40,29 @@ public class HumanService {
         students.add(student1);
         students.add(student2);
 
-        session.save(new Mentor(32.00, students));
+        Student student3 = new Student();
+        Student student4 = new Student();
+        session.save(student3);
+        session.save(student4);
+        List<Student> students2 = new ArrayList<>();
+        students.add(student3);
+        students.add(student4);
+
+        Alumnus alumnus1 = new Alumnus();
+        Alumnus alumnus2 = new Alumnus();
+        session.save(alumnus1);
+        session.save(alumnus2);
+        List<Alumnus> alumni = new ArrayList<>();
+        alumni.add(alumnus1);
+        alumni.add(alumnus2);
+
+        MentorPIIData mentorPIIData = new MentorPIIData();
+        mentorPIIData.setData("my Mentor Pii data");
+
+
+        session.save(mentorPIIData);
+        session.save(new Mentor(32.00, students, alumni, mentorPIIData));
+        session.save(new Mentor(99.00, students2, alumni, mentorPIIData));
 
         Human human = new Human();
         human.setName("Mikas");
@@ -43,10 +71,15 @@ public class HumanService {
         student.setGitHub("http://mikas.github.com");
         student.setName("Vladimir");
 
+        AlumnusPIIData alumnusPIIData = new AlumnusPIIData();
+        alumnusPIIData.setData("second sensitive data");
+        session.save(alumnusPIIData);
+
         Alumnus alumnus = new Alumnus();
         alumnus.setGitHub("http://dmitro.github.com");
         alumnus.setName("Dzmitro");
         alumnus.setHired(true);
+        alumnus.setPiiData(alumnusPIIData);
 
         Mentor mentor = new Mentor();
         mentor.setName("Anton");
@@ -86,6 +119,18 @@ public class HumanService {
         List<Alumnus> alumnus = session.createQuery("from Alumnus").getResultList();
         session.close();
         return alumnus;
+    }
+
+    public List<AlumnusPIIData> getAlumnusPiiData() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<AlumnusPIIData> humans = session.createQuery("from AlumnusPIIData").getResultList();
+        return humans;
+    }
+
+    public List<StudentPIIData> getStudentPiiData() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<StudentPIIData> studentPIIData = session.createQuery("from StudentPIIData").getResultList();
+        return studentPIIData;
     }
 
     public List<Mentor> getCachedMentors() {

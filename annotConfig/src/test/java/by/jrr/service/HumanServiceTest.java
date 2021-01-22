@@ -1,14 +1,12 @@
 package by.jrr.service;
 
-import by.jrr.bean.Alumnus;
-import by.jrr.bean.Human;
-import by.jrr.bean.Mentor;
-import by.jrr.bean.Student;
+import by.jrr.bean.*;
 import by.jrr.service.HumanService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 class HumanServiceTest {
 
@@ -45,8 +43,25 @@ class HumanServiceTest {
     @Test
     void getAllAlumnus() {
         List<Alumnus> humanList = humanService.getAllAlumnus();
+        List<Alumnus> filteredHumanList = humanList.stream()
+                .filter(a -> a.getPiiData() != null)
+                .collect(Collectors.toList());
+        AlumnusPIIData alumnusPIIData = filteredHumanList.get(0).getPiiData();
         System.out.println(humanList);
     }
+
+    @Test
+    void getAlumnusPiiData() {
+        List<AlumnusPIIData> alumnusPIIDataList = humanService.getAlumnusPiiData();
+        System.out.println(alumnusPIIDataList);
+    }
+
+    @Test
+    void getStudentPiiData() {
+        List<StudentPIIData> studentPIIData = humanService.getStudentPiiData();
+        System.out.println(studentPIIData);
+    }
+
 
     @Test
     void getCachedMentors() {

@@ -25,17 +25,20 @@ public class HibernateUtil {
                 settings.setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
                 settings.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
-                settings.put(Environment.USE_SECOND_LEVEL_CACHE, true);
-                settings.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory");
-                settings.put(Environment.USE_QUERY_CACHE, true);
+//                settings.put(Environment.USE_SECOND_LEVEL_CACHE, true);
+//                settings.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+//                settings.put(Environment.USE_QUERY_CACHE, true);
 
                 Configuration configuration = new Configuration();
                 configuration.setProperties(settings);
 
                 configuration.addAnnotatedClass(Human.class);
                 configuration.addAnnotatedClass(Student.class);
+                configuration.addAnnotatedClass(StudentPIIData.class);
                 configuration.addAnnotatedClass(Alumnus.class);
+                configuration.addAnnotatedClass(AlumnusPIIData.class);
                 configuration.addAnnotatedClass(Mentor.class);
+                configuration.addAnnotatedClass(MentorPIIData.class);
                 configuration.addAnnotatedClass(User.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

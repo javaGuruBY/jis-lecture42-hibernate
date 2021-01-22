@@ -14,7 +14,7 @@ import javax.persistence.*;
 @ToString(callSuper = true, includeFieldNames = false)
 //@MappedSuperclass
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Human {
