@@ -15,8 +15,17 @@ public class Student extends Human{
     @OneToOne
     StudentPIIData studentPIIData;
 
+    @ManyToOne
+    Human human;
+
+    public Student(String gitHub) {
+        this.gitHub = gitHub;
+    }
+
     @Override
     public String toString() {
         return "Student{}";
     }
+
+
 }

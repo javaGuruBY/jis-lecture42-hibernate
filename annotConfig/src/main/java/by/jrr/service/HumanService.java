@@ -19,76 +19,76 @@ public class HumanService {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        session.save(new Human(null, "Max"));
-//        session.save(new Student("http://stud.github.com"));
-        AlumnusPIIData transientPii = new AlumnusPIIData();
-        session.save(new Alumnus(true, transientPii));
-        session.save(transientPii);
-
-        Student piiStudent = new Student("http://stud.github.com", null);
-        StudentPIIData piiData = new StudentPIIData();
-        piiData.setStudent(piiStudent);
-        session.save(piiData);
-        session.save(piiStudent);
-
-
-        Student student1 = new Student();
-        Student student2 = new Student();
-        session.save(student1);
-        session.save(student2);
-        List<Student> students = new ArrayList<>();
-        students.add(student1);
-        students.add(student2);
-
-        Student student3 = new Student();
-        Student student4 = new Student();
-        session.save(student3);
-        session.save(student4);
-        List<Student> students2 = new ArrayList<>();
-        students.add(student3);
-        students.add(student4);
-
-        Alumnus alumnus1 = new Alumnus();
-        Alumnus alumnus2 = new Alumnus();
-        session.save(alumnus1);
-        session.save(alumnus2);
-        List<Alumnus> alumni = new ArrayList<>();
-        alumni.add(alumnus1);
-        alumni.add(alumnus2);
-
-        MentorPIIData mentorPIIData = new MentorPIIData();
-        mentorPIIData.setData("my Mentor Pii data");
-
-
-        session.save(mentorPIIData);
-        session.save(new Mentor(32.00, students, alumni, mentorPIIData));
-        session.save(new Mentor(99.00, students2, alumni, mentorPIIData));
-
-        Human human = new Human();
-        human.setName("Mikas");
-
-        Student student = new Student();
-        student.setGitHub("http://mikas.github.com");
-        student.setName("Vladimir");
-
-        AlumnusPIIData alumnusPIIData = new AlumnusPIIData();
-        alumnusPIIData.setData("second sensitive data");
-        session.save(alumnusPIIData);
-
-        Alumnus alumnus = new Alumnus();
-        alumnus.setGitHub("http://dmitro.github.com");
-        alumnus.setName("Dzmitro");
-        alumnus.setHired(true);
-        alumnus.setPiiData(alumnusPIIData);
-
-        Mentor mentor = new Mentor();
-        mentor.setName("Anton");
-        mentor.setSalary(64.00);
-
-        session.save(human);
-        session.save(student);
-        session.save(alumnus);
-        session.save(mentor);
+//        session.save(new Human(null, "Max"));
+////        session.save(new Student("http://stud.github.com"));
+//        AlumnusPIIData transientPii = new AlumnusPIIData();
+//        session.save(new Alumnus(true, transientPii));
+//        session.save(transientPii);
+//
+//        Student piiStudent = new Student("http://stud.github.com", null);
+//        StudentPIIData piiData = new StudentPIIData();
+//        piiData.setStudent(piiStudent);
+//        session.save(piiData);
+//        session.save(piiStudent);
+//
+//
+//        Student student1 = new Student();
+//        Student student2 = new Student();
+//        session.save(student1);
+//        session.save(student2);
+//        List<Student> students = new ArrayList<>();
+//        students.add(student1);
+//        students.add(student2);
+//
+//        Student student3 = new Student();
+//        Student student4 = new Student();
+//        session.save(student3);
+//        session.save(student4);
+//        List<Student> students2 = new ArrayList<>();
+//        students.add(student3);
+//        students.add(student4);
+//
+//        Alumnus alumnus1 = new Alumnus();
+//        Alumnus alumnus2 = new Alumnus();
+//        session.save(alumnus1);
+//        session.save(alumnus2);
+//        List<Alumnus> alumni = new ArrayList<>();
+//        alumni.add(alumnus1);
+//        alumni.add(alumnus2);
+//
+//        MentorPIIData mentorPIIData = new MentorPIIData();
+//        mentorPIIData.setData("my Mentor Pii data");
+//
+//
+//        session.save(mentorPIIData);
+//        session.save(new Mentor(32.00, students, alumni, mentorPIIData));
+//        session.save(new Mentor(99.00, students2, alumni, mentorPIIData));
+//
+//        Human human = new Human();
+//        human.setName("Mikas");
+//
+//        Student student = new Student();
+//        student.setGitHub("http://mikas.github.com");
+//        student.setName("Vladimir");
+//
+//        AlumnusPIIData alumnusPIIData = new AlumnusPIIData();
+//        alumnusPIIData.setData("second sensitive data");
+//        session.save(alumnusPIIData);
+//
+//        Alumnus alumnus = new Alumnus();
+//        alumnus.setGitHub("http://dmitro.github.com");
+//        alumnus.setName("Dzmitro");
+//        alumnus.setHired(true);
+//        alumnus.setPiiData(alumnusPIIData);
+//
+//        Mentor mentor = new Mentor();
+//        mentor.setName("Anton");
+//        mentor.setSalary(64.00);
+//
+//        session.save(human);
+//        session.save(student);
+//        session.save(alumnus);
+//        session.save(mentor);
 
         session.getTransaction().commit();
     }

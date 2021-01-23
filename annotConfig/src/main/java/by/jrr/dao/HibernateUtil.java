@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.hibernate.dialect.Oracle12cDialect;
 import org.hibernate.service.ServiceRegistry;
 
 import java.io.FileInputStream;
@@ -41,13 +42,12 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(MentorPIIData.class);
                 configuration.addAnnotatedClass(User.class);
 
+
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
 
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            }
-
-            catch (Throwable ex) {
+            } catch (Throwable ex) {
                 // Make sure you log the exception, as it might be swallowed
                 System.err.println("Initial SessionFactory creation failed." + ex);
                 throw new ExceptionInInitializerError(ex);
@@ -64,7 +64,7 @@ public class HibernateUtil {
     private static Properties loadProperties() {
         Properties properties = new Properties();
 
-        try(InputStream in = new FileInputStream("src/main/resources/jis4.properties")) {
+        try (InputStream in = new FileInputStream("src/main/resources/jis4.properties")) {
             properties.load(in);
         } catch (Exception ex) {
             System.out.println("Cannot find properties");
@@ -73,3 +73,5 @@ public class HibernateUtil {
         return properties;
     }
 }
+
+

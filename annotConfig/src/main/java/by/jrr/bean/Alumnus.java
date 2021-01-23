@@ -20,6 +20,16 @@ public class Alumnus extends Student{
     @JoinColumn(name = "piiDatapiiData", referencedColumnName = "id")
     AlumnusPIIData piiData;
 
+    String nickName;
+
+    @ManyToMany
+    Human human;
+
+    public Alumnus(String gitHub, String nickName) {
+        super(gitHub);
+        this.nickName = nickName;
+    }
+
     @Override
     public String toString() {
         return "Alumnus{}";
